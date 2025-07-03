@@ -1,30 +1,61 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
-# Install dependencies
-sudo apt update
-sudo apt install -y curl git unzip xz-utils ninja-build libgtk-3-dev libgl1-mesa-dev mesa-utils
+echo "🔧 Setting up Flutter in Codespaces..."
 
-# Download Flutter stable
-FLUTTER_DIR="$HOME/flutter"
-if [ ! -d "$FLUTTER_DIR" ]; then
-  echo "Downloading Flutter..."
-  curl -O https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.22.1-stable.tar.xz
-  tar xf flutter_linux_3.22.1-stable.tar.xz -C $HOME
-  rm flutter_linux_3.22.1-stable.tar.xz
+# 1. Update system and install dependencies
+sudo apt-get update
+sudo apt-get install -y \
+  git curl unzip xz-utils zip \
+  ninja-build cmake build-essential \
+  libgtk-3-dev liblzma-dev \
+  clang libclang-dev \
+  libgl1-mesa-dev libstdc++-12-dev \
+  xdg-utils libsecret-1-dev \
+  libjsoncpp-dev xvfb mesa-utils \
+  chromium-browser
+
+# 2. Install Flutter
+if [ ! -d "$HOME/flutter" ]; then
+  echo "📦 Cloning Flutter SDK..."
+  git clone https://github.com/flutter/flutter.git -b stable "$HOME/flutter"
+else
+  echo "🔄 Flutter SDK already exists. Skipping clone."
 fi
 
-# Add Flutter to PATH
-if ! grep -q 'export PATH="$HOME/flutter/bin:$PATH"' "$HOME/.bashrc"; then
-  echo 'export PATH="$HOME/flutter/bin:$PATH"' >> "$HOME/.bashrc"
+# 3. Add Flutter to PATH (if not already added)
+if ! grep -q 'flutter/bin' ~/.bashrc; then
+  echo 'export PATH="$HOME/flutter/bin:$PATH"' >> ~/.bashrc
+  export PATH="$HOME/flutter/bin:$PATH"
+else
+  export PATH="$HOME/flutter/bin:$PATH"
 fi
 
-# Source the updated .bashrc
-source "$HOME/.bashrc"
+# 4. Source Bash config to apply PATH
+source ~/.bashrc
 
-# Enable Linux desktop support
-flutter config --enable-linux-desktop
-
-# Run flutter doctor
+# 5. Run Flutter setup
+echo "🔍 Running flutter doctor..."
 flutter doctor
+
+# 6. Enable Linux and Web support
+flutter config --enable-linux-desktop
+flutter config --enable-web
+
+# 7. Set Chromium as web browser for Flutter
+export CHROME_EXECUTABLE=/usr/bin/chromium-browser
+
+# 8. Precache dependencies
+flutter precache
+
+# 9. Accept Android licenses (optional step — will skip in Codespaces)
+yes | flutter doctor --android-licenses || true
+
+# 10. Final check
+flutter doctor -v
+
+echo "✅ Flutter is fully installed and configured!"
+
+# 11. Optionally start your app (uncomment to run automatically)
+flutter run -d web-server

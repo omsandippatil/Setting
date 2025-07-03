@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "558329687928",
+    "project_id": "setting-8de4f",
+    "storage_bucket": "setting-8de4f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558329687928:android:fcd1ba5cef68986721e28d",
+        "android_client_info": {
+          "package_name": "com.setting.duru"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtgGYi-ymT6w6OpZ5eZd_yXcMLmWQ-FMM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

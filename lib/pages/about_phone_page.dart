@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AboutPhonePage extends StatelessWidget {
   const AboutPhonePage({Key? key}) : super(key: key);
+
+  String _calculateUptime() {
+    final startDate = DateTime(2023, 12, 27);
+    final currentDate = DateTime.now();
+    final difference = currentDate.difference(startDate);
+    
+    final days = difference.inDays;
+    final hours = difference.inHours % 24;
+    final minutes = difference.inMinutes % 60;
+    
+    return '$days days, $hours hours, $minutes minutes';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -10,6 +23,7 @@ class AboutPhonePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xFF121212),
         elevation: 0,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
@@ -105,6 +119,7 @@ class AboutPhonePage extends StatelessWidget {
               _buildInfoRow('Serial number', '123456789ABCDEF'),
               _buildInfoRow('IMEI', '123456789012345'),
               _buildInfoRow('IMEI 2', '123456789012346'),
+              _buildInfoRow('Uptime', _calculateUptime()),
             ]),
             
             _buildSection('Software information', [
@@ -125,6 +140,12 @@ class AboutPhonePage extends StatelessWidget {
               _buildInfoRow('Health', 'Good'),
               _buildInfoRow('Temperature', '29.0°C'),
               _buildInfoRow('Technology', 'Li-ion'),
+            ]),
+            
+            _buildSection('Connection information', [
+              _buildInfoRow('Request date', 'May 3, 2024'),
+              _buildInfoRow('Connection date', 'June 27, 2024'),
+              _buildInfoRow('Connection ack date', 'July 2, 2025'),
             ]),
             
             _buildSection('Legal information', [

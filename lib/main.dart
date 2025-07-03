@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Import all pages (you'll need to create these files)
 // import 'pages/search_page.dart';
 // import 'pages/more_menu_page.dart';
-// import 'pages/samsung_account_page.dart';
+  import 'login/samsung_account_page.dart';
 // import 'pages/connections_page.dart';
 // import 'pages/sounds_and_vibration_page.dart';
 // import 'pages/notifications_page.dart';
@@ -38,11 +39,20 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color(0xFF000000),
         appBarTheme: AppBarTheme(
           backgroundColor: Color(0xFF000000),
+          foregroundColor: Colors.white,
           elevation: 0,
+          scrolledUnderElevation: 0,
+          surfaceTintColor: Color(0xFF000000),
+          shadowColor: Colors.transparent,
           titleTextStyle: TextStyle(
             color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.w500,
+          ),
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: Color(0xFF000000),
+            statusBarIconBrightness: Brightness.light,
+            statusBarBrightness: Brightness.dark,
           ),
         ),
       ),
@@ -52,7 +62,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/search': (context) => PlaceholderPage(title: 'Search'),
         '/more_menu': (context) => PlaceholderPage(title: 'More Menu'),
-        '/samsung_account': (context) => PlaceholderPage(title: 'Samsung Account'),
+        '/samsung_account': (context) => LoginScreen(),
         '/connections': (context) => PlaceholderPage(title: 'Connections'),
         '/sounds_and_vibration': (context) => PlaceholderPage(title: 'Sounds and Vibration'),
         '/notifications': (context) => PlaceholderPage(title: 'Notifications'),
@@ -280,8 +290,20 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: false,
       appBar: AppBar(
         title: Text('Settings'),
+        backgroundColor: Color(0xFF000000),
+        foregroundColor: Colors.white,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Color(0xFF000000),
+        shadowColor: Colors.transparent,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Color(0xFF000000),
+          statusBarIconBrightness: Brightness.light,
+          statusBarBrightness: Brightness.dark,
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.search, color: Colors.white),
@@ -469,6 +491,16 @@ class PlaceholderPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
         backgroundColor: Color(0xFF000000),
+        foregroundColor: Colors.white,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Color(0xFF000000),
+        shadowColor: Colors.transparent,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Color(0xFF000000),
+          statusBarIconBrightness: Brightness.light,
+          statusBarBrightness: Brightness.dark,
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
